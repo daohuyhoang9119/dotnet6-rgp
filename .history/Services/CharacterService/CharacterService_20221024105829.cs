@@ -26,17 +26,15 @@ namespace dotnet_rgp.Services.CharacterService
         public async Task<ServiceResponse<List<GetCharacterDto>>> AddCharacter(AddCharacterDto newCharacter)
         {
             var serviceResponse = new ServiceResponse<List<GetCharacterDto>>();
-            // characters.Add(newCharacter);
-            characters.Add(_mapper.Map<Character>(newCharacter));
-            // serviceResponse.Data = characters;
-            serviceResponse.Data = characters.Select(c => _mapper.Map<GetCharacterDto>(c)).ToList();
+            characters.Add(newCharacter);
+            serviceResponse.Data = characters;
             return serviceResponse;
         }
 
         public async Task<ServiceResponse<List<GetCharacterDto>>> GetAllCharacters()
         {
             var serviceResponse = new ServiceResponse<List<GetCharacterDto>>();
-            serviceResponse.Data = characters.Select(c => _mapper.Map<GetCharacterDto>(c)).ToList();
+            serviceResponse.Data = characters;
             return serviceResponse;
         }
 
@@ -44,7 +42,7 @@ namespace dotnet_rgp.Services.CharacterService
         {
             var serviceResponse = new ServiceResponse<GetCharacterDto>();
             var character = characters.FirstOrDefault(c => c.Id == id); 
-            serviceResponse.Data = _mapper.Map<GetCharacterDto>(character);
+            serviceResponse.Data = character;
             return serviceResponse;
         }
     }
