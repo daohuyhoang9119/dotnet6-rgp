@@ -40,11 +40,8 @@ namespace dotnet_rgp.Controllers
         //update character
         [HttpPut]
         public async Task<ActionResult<ServiceResponse<GetCharacterDto>>> UpdateCharacter(UpdateCharacterDto updatedCharacter){
-            var response = await _characterService.UpdateCharacter(updatedCharacter);
-            if(response.Data == null){ 
-                return NotFound(response);
-            }
-            return Ok(response);
+            
+            return Ok(await _characterService.UpdateCharacter(updatedCharacter));
         }
         
     }

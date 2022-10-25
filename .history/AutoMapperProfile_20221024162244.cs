@@ -13,8 +13,6 @@ namespace dotnet_rgp
         {
             CreateMap<Character, GetCharacterDto>();
             CreateMap<AddCharacterDto,Character>();
-            // CreateMap<GetCharacterDto,UpdateCharacterDto>();
-            CreateMap<UpdateCharacterDto, Character>();
         }
     }
 }

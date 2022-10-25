@@ -44,7 +44,7 @@ namespace dotnet_rgp.Controllers
             if(response.Data == null){ 
                 return NotFound(response);
             }
-            return Ok(response);
+            return Ok(await _characterService.UpdateCharacter(updatedCharacter));
         }
         
     }

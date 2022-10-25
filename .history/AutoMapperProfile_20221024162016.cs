@@ -12,9 +12,7 @@ namespace dotnet_rgp
         public AutoMapperProfile()
         {
             CreateMap<Character, GetCharacterDto>();
-            CreateMap<AddCharacterDto,Character>();
-            // CreateMap<GetCharacterDto,UpdateCharacterDto>();
-            CreateMap<UpdateCharacterDto, Character>();
+            // CreateMap<AddCharacterDto,GetCharacterDto >();
         }
     }
 }

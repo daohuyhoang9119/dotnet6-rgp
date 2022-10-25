@@ -31,7 +31,7 @@ namespace dotnet_rgp.Controllers
         }
 
         //add new character
-        [HttpPost]
+        [HttpPut]
         public async Task<ActionResult<ServiceResponse<List<GetCharacterDto>>>> AddCharacter(AddCharacterDto newCharacter){
             
             return Ok(await _characterService.AddCharacter(newCharacter));
@@ -39,12 +39,9 @@ namespace dotnet_rgp.Controllers
         
         //update character
         [HttpPut]
-        public async Task<ActionResult<ServiceResponse<GetCharacterDto>>> UpdateCharacter(UpdateCharacterDto updatedCharacter){
-            var response = await _characterService.UpdateCharacter(updatedCharacter);
-            if(response.Data == null){ 
-                return NotFound(response);
-            }
-            return Ok(response);
+        public async Task<ActionResult<ServiceResponse<List<UpdateCharacterDto>>>> UpdateCharacter(UpdateCharacterDto updatedCharacter){
+            
+            return Ok(await _characterService.UpdateCharacter(updatedCharacter));
         }
         
     }
