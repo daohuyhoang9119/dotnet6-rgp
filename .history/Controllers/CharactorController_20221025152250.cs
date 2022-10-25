@@ -27,12 +27,7 @@ namespace dotnet_rgp.Controllers
         //get character by id
         [HttpGet("{id}")]
         public async Task<ActionResult<ServiceResponse<GetCharacterDto>>> GetSingle(int id){
-            // return Ok(await _characterService.GetCharacterById(id));
-            var response = await _characterService.GetCharacterById(id);
-            if(response.Data == null){ 
-                return NotFound(response);
-            }
-            return Ok(response);
+            return Ok(await _characterService.GetCharacterById(id));
         }
 
         //add new character

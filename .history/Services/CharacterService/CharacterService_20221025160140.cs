@@ -31,18 +31,16 @@ namespace dotnet_rgp.Services.CharacterService
         public async Task<ServiceResponse<List<GetCharacterDto>>> AddCharacter(AddCharacterDto newCharacter)
         {
             var serviceResponse = new ServiceResponse<List<GetCharacterDto>>();
-            var dbCharacters = await _context.Characters.ToListAsync();
             // characters.Add(newCharacter);
             // characters.Add(_mapper.Map<Character>(newCharacter));
             //tìm thằng lớn nhất nếu có sau đó tăng index lên 1
             //tạo thằng cần thêm
             Character character = _mapper.Map<Character>(newCharacter);
             //tìm id của th lớn r cộng vào cho th mới
-            // character.Id = characters.Max(c => c.Id) + 1;
-            _context.Characters.Add(character);
-            await _context.SaveChangesAsync();
+            character.Id = characters.Max(c => c.Id) + 1;
+            characters.Add(character);
             // serviceResponse.Data = characters;
-            serviceResponse.Data = await _context.Characters.Select(c => _mapper.Map<GetCharacterDto>(c)).ToListAsync();
+            serviceResponse.Data = characters.Select(c => _mapper.Map<GetCharacterDto>(c)).ToList();
             return serviceResponse;
         }
         // GET

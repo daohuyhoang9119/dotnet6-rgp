@@ -3,19 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
-using dotnet_rgp.Data;
 using dotnet_rgp.Dtos.Character;
-using Microsoft.EntityFrameworkCore;
 
 namespace dotnet_rgp.Services.CharacterService
 {
     public class CharacterService : ICharacterService
     {
         private readonly IMapper _mapper;
-        private readonly DataContext _context;
-        public CharacterService(IMapper mapper, DataContext context)
+        public CharacterService(IMapper mapper)
         {
-            this._context = context;
             this._mapper = mapper;
         }
          private static List<Character> characters = new List<Character>{
@@ -27,41 +23,37 @@ namespace dotnet_rgp.Services.CharacterService
             
         };
 
-        //ADD
         public async Task<ServiceResponse<List<GetCharacterDto>>> AddCharacter(AddCharacterDto newCharacter)
         {
             var serviceResponse = new ServiceResponse<List<GetCharacterDto>>();
-            var dbCharacters = await _context.Characters.ToListAsync();
             // characters.Add(newCharacter);
             // characters.Add(_mapper.Map<Character>(newCharacter));
             //tìm thằng lớn nhất nếu có sau đó tăng index lên 1
             //tạo thằng cần thêm
             Character character = _mapper.Map<Character>(newCharacter);
             //tìm id của th lớn r cộng vào cho th mới
-            // character.Id = characters.Max(c => c.Id) + 1;
-            _context.Characters.Add(character);
-            await _context.SaveChangesAsync();
+            character.Id = characters.Max(c => c.Id) + 1;
+            characters.Add(character);
             // serviceResponse.Data = characters;
-            serviceResponse.Data = await _context.Characters.Select(c => _mapper.Map<GetCharacterDto>(c)).ToListAsync();
+            serviceResponse.Data = characters.Select(c => _mapper.Map<GetCharacterDto>(c)).ToList();
             return serviceResponse;
         }
-        // GET
+
         public async Task<ServiceResponse<List<GetCharacterDto>>> GetAllCharacters()
         {
             var serviceResponse = new ServiceResponse<List<GetCharacterDto>>();
-            var dbCharacters = await _context.Characters.ToListAsync();
-            serviceResponse.Data = dbCharacters.Select(c =>  _mapper.Map<GetCharacterDto>(c)).ToList();
+            serviceResponse.Data = characters.Select(c =>  _mapper.Map<GetCharacterDto>(c)).ToList();
             return  serviceResponse;
         }
 
         public async Task<ServiceResponse<GetCharacterDto>> GetCharacterById(int id)
         {
             var serviceResponse = new ServiceResponse<GetCharacterDto>();
-            var dbCharacter = await _context.Characters.FirstOrDefaultAsync(c => c.Id == id); 
-            serviceResponse.Data = _mapper.Map<GetCharacterDto>(dbCharacter);
+            var character = characters.FirstOrDefault(c => c.Id == id); 
+            serviceResponse.Data = _mapper.Map<GetCharacterDto>(character);
             return serviceResponse;
         }
-        // UPDATE
+
         public async Task<ServiceResponse<GetCharacterDto>> UpdateCharacter(UpdateCharacterDto updatedCharacter)
         {
             ServiceResponse<GetCharacterDto> response = new ServiceResponse<GetCharacterDto>();
@@ -83,7 +75,6 @@ namespace dotnet_rgp.Services.CharacterService
             return response;
         }
 
-        // DELETE
         public async Task<ServiceResponse<List<GetCharacterDto>>> DeleteCharacter(int id)
         { 
             ServiceResponse<List<GetCharacterDto>> response = new ServiceResponse<List<GetCharacterDto>>();
