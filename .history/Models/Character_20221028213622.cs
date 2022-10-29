@@ -14,7 +14,7 @@ namespace dotnet_rgp.Models
         public int Defense { get; set; } = 10;
         public int Intelligence { get; set; } = 10;
 
-        public User? User { get; set; }
+        public int UserId { get; set; }
         public RpgClass Class { get; set; } = RpgClass.Knight;
     }
 }
