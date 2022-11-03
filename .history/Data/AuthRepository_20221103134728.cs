@@ -15,22 +15,9 @@ namespace dotnet_rgp.Data
             this._context = context;
         }
 
-        public async Task<ServiceResponse<string>> Login(string username, string password)
+        public Task<ServiceResponse<string>> Login(string username, string password)
         {
-            ServiceResponse<string> response = new ServiceResponse<string>();
-            var user = await _context.Users.FirstOrDefaultAsync(c => c.Username.ToLower() == username.ToLower());
-            if(user == null){
-                response.Success = false;
-                response.Message = "User not found";
-            }
-            else if(!VerifyPasswordHash(password, user.PasswordHash, user.PasswordSalt)){
-                response.Success = false;
-                response.Message = "Password is wrong";
-            }else{
-                response.Data = user.UserId.ToString();
-                response.Message = "Login successfull";
-            }
-            return response;
+            throw new NotImplementedException();
         }
 
         public async Task<ServiceResponse<int>> Register(User user, string password)
@@ -66,7 +53,7 @@ namespace dotnet_rgp.Data
             }
         }
 
-        private bool VerifyPasswordHash(string password, byte[] passwordHash, byte[] passwordSalt){
+        private bool VerifyPassword(string password, byte[] passwordHash, byte[] passwordSalt){
             using (var hmac = new System.Security.Cryptography.HMACSHA512(passwordSalt)){
                 var computedHash = hmac.ComputeHash(System.Text.Encoding.UTF8.GetBytes(password));
                 Debug.WriteLine(computedHash);

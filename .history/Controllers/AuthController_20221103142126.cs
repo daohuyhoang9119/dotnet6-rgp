@@ -20,7 +20,7 @@ namespace dotnet_rgp.Controllers
 
         [HttpPost("login")]
         public async Task<ActionResult<ServiceResponse<string>>> Login(UserLoginDto userlogin){
-            var response = await _authRepo.Login(userlogin.Username, userlogin.Password); 
+            var response = await _authRepo.Login(userlogin.Username,userlogin.Password); 
              if(response.Success == false){
                 return BadRequest(response);
             }

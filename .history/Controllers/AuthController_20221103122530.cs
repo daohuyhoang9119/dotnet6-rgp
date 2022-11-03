@@ -18,24 +18,17 @@ namespace dotnet_rgp.Controllers
             this._authRepo = authRepo;
         }
 
-        [HttpPost("login")]
-        public async Task<ActionResult<ServiceResponse<string>>> Login(UserLoginDto userlogin){
-            var response = await _authRepo.Login(userlogin.Username, userlogin.Password); 
-             if(response.Success == false){
-                return BadRequest(response);
-            }
-            return Ok(response);
-        }
-
-        [HttpPost("register")]
+        [HttpPost]
         public async Task<ActionResult<ServiceResponse<int>>> Register(UserRegisterDto request){
             var response = await _authRepo.Register(
                 new User {Username = request.Username},request.Password
             );
-            if(response.Success == false){
-                return BadRequest(response);
+            if(response.Success = false){
+                return NotFound(response);
             }
             return Ok(response);
+            // return Ok(await _characterService.AddCharacter(newCharacter));
+            // return Ok(await _authRepository.Register(user,password));
         }
         
     }

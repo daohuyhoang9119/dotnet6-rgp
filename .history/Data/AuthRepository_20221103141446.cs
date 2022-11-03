@@ -26,11 +26,8 @@ namespace dotnet_rgp.Data
             else if(!VerifyPasswordHash(password, user.PasswordHash, user.PasswordSalt)){
                 response.Success = false;
                 response.Message = "Password is wrong";
-            }else{
-                response.Data = user.UserId.ToString();
-                response.Message = "Login successfull";
             }
-            return response;
+            return response;  
         }
 
         public async Task<ServiceResponse<int>> Register(User user, string password)

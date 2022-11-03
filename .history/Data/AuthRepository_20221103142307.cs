@@ -28,7 +28,6 @@ namespace dotnet_rgp.Data
                 response.Message = "Password is wrong";
             }else{
                 response.Data = user.UserId.ToString();
-                response.Message = "Login successfull";
             }
             return response;
         }
